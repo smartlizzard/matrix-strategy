@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         os: ["ubuntu-latest", "macos-latest", "windows-latest"]  # Define OS variations
-        python-version: ["3.9","3.10", "3.11", "3.12"]  # Define Python versions
+        python-version: ["3.9", "3.10", "3.11", "3.12"]  # Define Python versions
 
     steps:
 
