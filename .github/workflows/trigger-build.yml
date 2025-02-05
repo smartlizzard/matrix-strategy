@@ -1,0 +1,29 @@
+name: Trigger Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag for the Docker image"
+        required: true
+        type: string
+      ref:
+        description: "Git reference (branch or tag) to checkout"
+        required: true
+        type: string
+
+jobs:
+  call-build-workflow:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      tag: ${{ inputs.tag }}
+      ref: ${{ inputs.ref }}
+
+  echo-outputs:
+    runs-on: ubuntu-latest
+    needs: call-build-workflow
+    steps:
+      - name: Echo Outputs
+        run: |
+          echo "Image URI: ${{ needs.call-build-workflow.outputs.image_uri }}"
+          echo "Success Status: ${{ needs.call-build-workflow.outputs.success }}"
